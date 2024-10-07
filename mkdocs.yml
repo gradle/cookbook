@@ -1,8 +1,8 @@
-site_name: Gradle Community Site
+site_name: Gradle Cookbook
 site_author: Gradle Contributors
 site_description: >-
-  This is an open-source site for all Gradle community matters,
-  including governance, artwork, events, and public infrastructure.
+  Gradle Cookbook is an open-source collection of recipes, guides and examples for the Gradle Build Tool.
+  This is a complementary resource to the official Gradle User Manual.
 copyright: >
   Copyright &copy; 2024 - All contributors to the repository and included components.
   The original content licenses and copyrights from the included repositories are preserved,
@@ -13,9 +13,9 @@ copyright: >
   In the Gradle Cookbook, "Gradle" typically means "Gradle Build Tool" and does not reference Gradle Inc. and/or its subsidiaries.
 docs_dir: docs
 repo_url: https://github.com/gradle/community
-repo_name: Gradle Community repo
+repo_name: Gradle Cookbook
 edit_uri: edit/main/docs/
-site_url: https://community.gradle.org
+site_url: https://cookbook.gradle.org
 
 # Build
 site_dir: _site
@@ -73,8 +73,8 @@ theme:
     # TODO: use the site's scheme
     # text: Lato Lite
     code: Roboto Mono
-  favicon: images/logos/gradle.svg
-  logo: images/logos/gradle.svg
+  favicon: assets/images/logos/gradle.svg
+  logo: assets/images/logos/gradle.svg
   icon:
     repo: fontawesome/brands/github
 
@@ -105,61 +105,17 @@ extra:
     provider: custom
 
 nav:
-  - Home: README.md
-  - Cookbook:
-    - Overview: cookbook/README.md
-    - Gradle on CI:
-      - Summary: cookbook/ci/README.md
-      - Jenkins: cookbook/ci/jenkins.md
-      - TeamCity: cookbook/ci/teamcity.md
-      - GitHub Actions: cookbook/ci/github-actions.md
-      - GitLab CI: cookbook/ci/gitlab-ci.md
-      - Travis CI: cookbook/ci/travis-ci.md
-    - Gradle for Kotlin: cookbook/kotlin/README.md
-    - Gradle for Android: cookbook/android/README.md
-    - Contributing: cookbook/CONTRIBUTING.md
-  - Hacktoberfest 2024: events/hacktoberfest/2024/README.md
-  - Participate:
-    - Getting Started: contributing/README.md
-    - Community Slack: contributing/community-slack.md
-    - Spread the Word: contributing/spread-the-word.md
-    - Contributing to Gradle Build Tool:
-      - Overview: gradle/CONTRIBUTING.md
-      - Gradle Build Tool Architecture: gradle/architecture/README.md
-    - Contributing to Documentation:
-      - Overview: contributing/documentation/README.md
-      - Gradle Build Tool Docs: gradle/platforms/documentation/docs/README.md
-      - Community Site Docs: CONTRIBUTING.md
-    - Reporting Vulnerabilities: dotgithub/SECURITY.md
-    - Public Roadmap: roadmap/README.md
-    - Code of Conduct: dotgithub/CODE_OF_CONDUCT.md
-  - Events:
-      - Events Overview: events/README.md
-      - 2024 Developer Survey: surveys/developer-survey/README.md
-      - Hacktoberfest: events/hacktoberfest/README.md
-      - Google Summer of Code:
-        - Overview: events/gsoc/README.md
-        - Gradle Build Server - Support for Android projects: events/gsoc/2024/gradle-build-server-android.md
-        - Gradle Build Server - DevX and Language Support in Buildship: events/gsoc/2024/gradle-build-server-devx.md
-        - Declarative Syntax and Enhancements for the Checkstyle Plugin: events/gsoc/2024/checkstyle-plugin.md
-  - Resources:
-    - Key Resources: resources/README.md
-    - Public Roadmap: roadmap/README.md
-    - Code of Conduct: dotgithub/CODE_OF_CONDUCT.md
-    - Social Media: resources/social-media.md
-    - Trademark and Branding: https://gradle.com/brand/
-#  - Resources:
-#    - Gradle Docs: https://docs.gradle.org/
-#    - Blog: https://blog.gradle.org/
-#    - Newsletter: https://newsletter.gradle.org/
-#    - Releases: https://gradle.org/releases
-#    - Plugin Portal: https://plugins.gradle.org/
-#    - Slack Archive: https://www.linen.dev/s/gradle-community
-#    - Stack Overflow: https://stackoverflow.com/questions/tagged/gradle
-#  - Commercial:
-#    - Develocity: https://gradle.com/develocity
-#    - Service Providers: https://gradle.org/services/
-#    - Training: https://gradle.org/courses
+  - Overview: README.md
+  - Gradle on CI:
+    - Summary: ci/README.md
+    - Jenkins: ci/jenkins.md
+    - TeamCity: ci/teamcity.md
+    - GitHub Actions: ci/github-actions.md
+    - GitLab CI: ci/gitlab-ci.md
+    - Travis CI: ci/travis-ci.md
+  - Gradle for Kotlin: kotlin/README.md
+  - Gradle for Android: android/README.md
+  - Contributing: CONTRIBUTING.md
 
 plugins:
   - search
@@ -172,30 +128,16 @@ plugins:
       cards_layout_options:
         background_color: "#010002"
         font_family: Lato
-  - group:
-      enabled: !ENV [FULL_BUILD, true]
-      plugins:
-      - multirepo:
-          cleanup: false
-          keep_docs_dir: true
-          nav_repos:
-          - name: dotgithub
-            import_url: 'https://github.com/gradle/.github?branch=master&edit_uri=/blob/master/'
-          - name: gradle
-            import_url: 'https://github.com/gradle/gradle?branch=master&edit_uri=/blob/master/'
-            imports: [ "/*.md", "/*.png", "platforms/documentation/docs/README.md", "architecture/*", "architecture/standards/*" ]
-          - name: roadmap
-            import_url: 'https://github.com/gradle/build-tool-roadmap?branch=main&edit_uri=/blob/main/'
-            imports: [ "README.md" ]
-          - name: gradle-profiler
-            import_url: 'https://github.com/gradle/gradle-profiler?branch=master&edit_uri=/blob/master/'
-            imports: [ "README.md" ]
-          - name: declarative-gradle
-            import_url: 'https://github.com/gradle/declarative-gradle?branch=main&edit_uri=/blob/main/'
-            imports: [ "README.md", "**/README.md" ]
-          - name: github-actions
-            import_url: 'https://github.com/gradle/actions?branch=main&edit_uri=/blob/main/'
-            imports: [ "README.md", "*" ]
+ # - group:
+ #     enabled: !ENV [FULL_BUILD, true]
+ #     plugins:
+ #     - multirepo:
+ #         cleanup: false
+ #         keep_docs_dir: true
+ #         nav_repos:
+ #         - name: github-actions
+ #           import_url: 'https://github.com/gradle/actions?branch=main&edit_uri=/blob/main/'
+ #           imports: [ "README.md", "*" ]
 
   - with-pdf:
       enabled_if_env: BUILD_PDF
@@ -212,16 +154,6 @@ plugins:
       toc_title: Table of Contents
       toc_level: 3
       show_anchors: true
-      exclude_pages:
-          - ^$
-          - 'CONTRIBUTING'
-          - 'events/'
-          - 'contributing/'
-          - 'projects/'
-
-  - redirects:
-      redirect_maps:
-        'events/hacktoberfest/README.md' : 'events/hacktoberfest/2024/README.md'
 
 # Markdown
 markdown_extensions:
