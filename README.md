@@ -6,6 +6,10 @@ This is a complementary resource to the official Gradle User Manual, which cover
 The goal of this portal is to offer solution-based documentation for end users about external integrations,
 including but not limited to CI/CD tools, IDEs, support for languages and frameworks, and various peripheral tools.
 
+## Status
+
+> **WARNING:** Gradle Cookbook is an incubating project that is yet to reach the critical mass of content.
+> Any contributions will be appreciated!
 
 ## Contributing
 
