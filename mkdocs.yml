@@ -12,7 +12,7 @@ copyright: >
   Use of the Gradle Marks the Gradle Cookbook pages is for identification purposes only and does not imply sponsorship or endorsement by Gradle, Inc.
   In the Gradle Cookbook, "Gradle" typically means "Gradle Build Tool" and does not reference Gradle Inc. and/or its subsidiaries.
 docs_dir: docs
-repo_url: https://github.com/gradle/community
+repo_url: https://github.com/gradle/cookbook
 repo_name: Gradle Cookbook
 edit_uri: edit/main/docs/
 site_url: https://cookbook.gradle.org
