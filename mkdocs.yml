@@ -34,6 +34,8 @@ nav:
     - Travis CI: ci/travis-ci.md
   - Gradle for Kotlin: kotlin/README.md
   - Gradle for Android: android/README.md
+  - Troubleshooting Gradle: troubleshooting/README.md
+  - Plugin Development: plugin-development/README.md
 
 # Theme
 theme:
