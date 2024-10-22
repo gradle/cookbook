@@ -1,0 +1,20 @@
+name: '🐛 Bug report'
+labels: 'bug'
+description: > 
+  Create a bug report if you see something wrong with the pages
+
+body:
+
+  - type: input
+    attributes:
+      label: Page URL
+      description: URL of the page where you see the issue.
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Description
+      description: Describe the issue and the expected changes
+    validations:
+      required: true

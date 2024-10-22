@@ -1,0 +1,19 @@
+name: '📝 New Chapter'
+labels: 'documentation'
+description: >
+  Want to propose a new section? 
+
+body:
+  - type: textarea
+    attributes:
+      label: Describe an area which is not yet covered by existing documentation.
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: >
+        Reference any relevant documentation, other materials or issues/pull requests that can be used for inspiration.
+
+
+

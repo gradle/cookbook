@@ -1,0 +1,7 @@
+blank_issues_enabled: false
+contact_links:
+  - name: "🛟 Community Slack"
+    url: https://community.gradle.org/contributing/community-slack/
+    about: >
+      There is also #community-support channel if you need help.
+      If you want to share feedback or discuss any changes in the docs, consider joining our the #docs channel.
