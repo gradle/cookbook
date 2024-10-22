@@ -20,6 +20,21 @@ site_url: https://cookbook.gradle.org
 # Build
 site_dir: _site
 
+nav:
+  - Overview:
+    - preface.md
+    - chapters.md
+    - Contributing: CONTRIBUTING.md
+  - Gradle on CI:
+    - Summary: ci/README.md
+    - Jenkins: ci/jenkins.md
+    - TeamCity: ci/teamcity.md
+    - GitHub Actions: ci/github-actions.md
+    - GitLab CI: ci/gitlab-ci.md
+    - Travis CI: ci/travis-ci.md
+  - Gradle for Kotlin: kotlin/README.md
+  - Gradle for Android: android/README.md
+
 # Theme
 theme:
   name: material
@@ -104,18 +119,7 @@ extra:
   analytics:
     provider: custom
 
-nav:
-  - Overview: README.md
-  - Gradle on CI:
-    - Summary: ci/README.md
-    - Jenkins: ci/jenkins.md
-    - TeamCity: ci/teamcity.md
-    - GitHub Actions: ci/github-actions.md
-    - GitLab CI: ci/gitlab-ci.md
-    - Travis CI: ci/travis-ci.md
-  - Gradle for Kotlin: kotlin/README.md
-  - Gradle for Android: android/README.md
-  - Contributing: CONTRIBUTING.md
+
 
 plugins:
   - search
@@ -138,6 +142,11 @@ plugins:
  #         - name: github-actions
  #           import_url: 'https://github.com/gradle/actions?branch=main&edit_uri=/blob/main/'
  #           imports: [ "README.md", "*" ]
+
+  - git-revision-date-localized
+  - git-committers:
+      repository: gradle/cookbook
+      branch: main
 
   - with-pdf:
       enabled_if_env: BUILD_PDF
