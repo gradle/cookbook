@@ -12,3 +12,7 @@ More chapters will be added soon, based on contributions.
 - [Gradle for Android development](./android/README.md)
 - [Gradle on Continuous Integration](./ci/README.md)
 
+## For Developers
+
+- [Troubleshooting Gradle issues and performance](./troubleshooting/README.md)
+- [Plugin Development](./plugin-development/README.md)
