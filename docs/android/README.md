@@ -1,3 +1,4 @@
+
 # Gradle for Android
 
 Gradle is one of the most popular build tools in the Android ecosystem. It is used for [Kotlin and Kotlin Multiplatform](../kotlin/README.md), [Flutter](https://flutter.dev/), [React Native](https://reactnative.dev/), and other toolchains.
@@ -40,7 +41,10 @@ android {
     buildTypes {
         release {
             minifyEnabled(true)
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
 }
@@ -55,10 +59,10 @@ Android build management allows you to define various configurations for packagi
 android {
     flavorDimensions("version")
     productFlavors {
-        create("free") {
+        free {
             dimension = "version"
         }
-        create("paid") {
+        paid {
             dimension = "version"
         }
     }
@@ -85,10 +89,10 @@ Gradle provides tasks for building your Android projects, including compiling co
 #### Example of Building an APK with Kotlin DSL:
 
 ```kotlin
-tasks.register("assembleDebug")  {
-doLast {
-println("Building APK in debug mode...")
-}
+tasks.register("customAssembleDebug") {
+    doLast {
+        println("Building APK in debug mode...")
+    }
 }
 ```
 This Kotlin example registers a task to build the APK in debug mode. For more detailed steps on building projects and packaging apps, visit the [Building Projects Guide](https://developer.android.com/build/building-cmdline).
@@ -110,7 +114,7 @@ You can extend the Android Gradle Plugin (AGP) by writing custom tasks and plugi
 
 #### Example of a Custom Task:
 ```kotlin
-tasks.register("hello") {
+tasks.register("printHelloMessage") {
     doLast {
         println("Hello, Android Developers!")
     }
@@ -131,13 +135,9 @@ Encountering issues with the Android Gradle Plugin (AGP) is common, and this sec
 #### Example of Dependency Conflict Resolution:
 ```kotlin
 configurations.all {
-
-resolutionStrategy {
-
-force("com.google.guava:guava:27.0.1-android")
-
-}
-
+    resolutionStrategy {
+        force("com.google.guava:guava:27.0.1-android")
+    }
 }
 ```
 For more troubleshooting tips, visit the **official**  [Troubleshooting AGP](https://developer.android.com/build/troubleshoot) page.
