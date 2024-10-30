@@ -56,4 +56,4 @@ trademark usage and the approval process.
 ## References
 
 - [Gradle User Manual](https://docs.gradle.org/current/userguide/userguide.html)
-- [Other Documentation Locations](../contributing/documentation/README.md/#locations)
+- [Other Documentation Locations](https://community.gradle.org/contributing/documentation)

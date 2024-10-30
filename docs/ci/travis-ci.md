@@ -38,7 +38,7 @@ BUILD SUCCESSFUL
 14 actionable tasks: 14 executed
 ```
 
-The project provides the [Gradle Wrapper](gradle_wrapper.adoc#gradle_wrapper_reference) as part of the repository. It is a recommended practice for any Gradle project as it enables your project to be built on CI without having to install the Gradle runtime.
+The project provides the [Gradle Wrapper](https://docs.gradle.org/current/userguide/gradle_wrapper.html) as part of the repository. It is a recommended practice for any Gradle project as it enables your project to be built on CI without having to install the Gradle runtime.
 
 ### Build scan integration
 
