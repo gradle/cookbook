@@ -1,5 +1,7 @@
 # Gradle for Plugin Development
 
-!!! info
+## Recipes
 
-    Work in progress, recipe contributions are [welcome](../CONTRIBUTING.md)!
+- [Writing Gradle plugins in Kotlin](./kotlin-plugins.md)
+
+
