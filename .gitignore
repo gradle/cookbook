@@ -10,3 +10,5 @@ temp_dir
 /.idea/vcs.xml
 
 .DS_Store
+
+pyvenv.cfg
