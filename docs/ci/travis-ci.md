@@ -1,7 +1,7 @@
 # Executing Gradle builds on Travis CI
 
 !!! tip
-    Top engineering teams using Travis CI have been able to reduce CI build time by up to 90% by using the Gradle Build Cache. [Register here](https://gradle.org/training/#build-cache-deep-dive) for our Build Cache training session to learn how your team can achieve similar results.
+    Top engineering teams using Travis CI have been able to reduce CI build time by up to 90% by using the Gradle Build Cache. [Register here](https://dpeuniversity.gradle.com/app/courses/ec69d0b8-9171-4969-ac3e-82dea16f87b0) for our Build Cache training session to learn how your team can achieve similar results.
 
 Building Gradle projects doesn't stop with the developer's machine. [Continuous Integration](https://en.wikipedia.org/wiki/Continuous_integration) (CI) has been a long-established practice for running a build for every single change committed to version control to tighten the feedback loop.
 
@@ -60,7 +60,7 @@ Travis CI is a free, cloud-based CI solution provider making it an excellent cho
 
 Travis CI requires you to check in a [configuration file](https://docs.travis-ci.com/user/customizing-the-build/) with your source code named `.travis.yml`. This file contains all relevant instructions for building the project.
 
-The following configuration file tells Travis CI to build a Java project with JDK 8, skip the usual [default execution step](https://docs.travis-ci.com/user/customizing-the-build/#Skipping-the-Installation-Step), and run the Gradle build with the Wrapper.
+The following configuration file tells Travis CI to build a Java project with JDK 8, skip the usual [default execution step](https://docs.travis-ci.com/user/job-lifecycle/#skip-the-installation-phase), and run the Gradle build with the Wrapper.
 
 ```yaml
 language: java
@@ -82,7 +82,7 @@ Select the project from the Travis CI profile. After activating the repository f
 
 ### Enable caching of downloaded artifacts
 
-Gradle's dependency management mechanism resolves declared modules and their corresponding artifacts from a binary repository. Once downloaded, the files will be re-used from the cache. You need to tell Travis CI explicitly that you want to [store and use the Gradle cache and Wrapper](https://docs.travis-ci.com/user/languages/java/#Caching) for successive invocations of the build.
+Gradle's dependency management mechanism resolves declared modules and their corresponding artifacts from a binary repository. Once downloaded, the files will be re-used from the cache. You need to tell Travis CI explicitly that you want to [store and use the Gradle cache and Wrapper](https://docs.travis-ci.com/user/languages/java/#caching) for successive invocations of the build.
 
 ```yaml
 before_cache:
