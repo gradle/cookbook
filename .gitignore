@@ -12,3 +12,4 @@ temp_dir
 .DS_Store
 
 pyvenv.cfg
+.venv/

@@ -1,6 +1,6 @@
 # Contributing to the Gradle Cookbook
 
-[![a](https://img.shields.io/badge/slack-%23docs-brightgreen?style=flat&logo=slack)](./contributing/community-slack.md)
+[![a](https://img.shields.io/badge/slack-%23docs-brightgreen?style=flat&logo=slack)](https://gradle.org/slack-invite)
 
 
 The Gradle Cookbook is under active development.
@@ -8,7 +8,7 @@ Any contributions are welcome!
 
 ## Discuss
 
-- `#docs` on the [Gradle Community Slack](../contributing/community-slack.md)
+- `#docs` on the [Gradle Community Slack](https://gradle.org/slack-invite)
 - [GitHub Issues](https://github.com/gradle/community/issues)
 
 ## Development Environment
