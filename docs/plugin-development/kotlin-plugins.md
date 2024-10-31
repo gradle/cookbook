@@ -142,18 +142,19 @@ If you are used to writing `build.gradle.kts` files, you may use the `kotlin-dsl
 `kotlin-dsl` configures the Kotlin compiler so that you can use precompiled scripts plugins and/or write similar syntax in your regular `.kt` files.
 
 The `kotlin-dls` plugin:
+
 * applies `"java-gradle-plugin"`.
 * applies `kotlin-embedded` to use the same Kotlin embeeded version as your Gradle distribution. 
 * applies the `&#96;kotlin-dsl-precompiled-script-plugins&#96;` allowing to use `build.gradle.kts` files.
 * adds `gradleKotlinDsl()` to the `compileOnly` configuration.
 * configures the `sam-with-receiver` Kotlin compiler plugin to transform `it.` usages into `this.`.
 * configures the `kotlin-assignment` Kotlin compiler plugin to allow setting `Property` with the `=` operator.
-* sets Kotlin `apiVersion` and `languageVersion` according to Gradle [compatibility [atrix](https://docs.gradle.org/current/userguide/compatibility.html#kotlin). 
+* sets Kotlin `apiVersion` and `languageVersion` according to Gradle [compatibility Matrix](https://docs.gradle.org/current/userguide/compatibility.html#kotlin). 
 * adds the `-Xsam-conversions=class` compiler option.
 * adds others compiler options for compatibility:
-  ** `-java-parameters` to support https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Parameter.html[Java 8 Parameter] class and getting method parameters through reflection
-  ** `-Xjvm-default=all` to add link:https://kotlinlang.org/docs/java-to-kotlin-interop.html#default-methods-in-interfaces[Default methods in interfaces]
-  ** `-Xjsr305=strict` for https://kotlinlang.org/docs/java-interop.html#compiler-configuration[increased null safety]
+  * `-java-parameters` to support [Java 8 Parameter](https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Parameter.html) class and getting method parameters through reflection
+  * `-Xjvm-default=all` to add [Default methods in interfaces](https://kotlinlang.org/docs/java-to-kotlin-interop.html#default-methods-in-interfaces)
+  * `-Xjsr305=strict` for [increased null safety](https://kotlinlang.org/docs/java-interop.html#compiler-configuration)
 
 This is a significant departure from the baseline Kotlin configuration so be aware of the tradeoffs when using `kotlin-dsl`. 
 

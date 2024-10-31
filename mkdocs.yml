@@ -35,7 +35,9 @@ nav:
   - Gradle for Kotlin: kotlin/README.md
   - Gradle for Android: android/README.md
   - Troubleshooting Gradle: troubleshooting/README.md
-  - Plugin Development: plugin-development/README.md
+  - Plugin Development:
+    - Summary: plugin-development/README.md
+    - Kotlin plugin development: plugin-development/kotlin-plugins.md
 
 # Theme
 theme:
