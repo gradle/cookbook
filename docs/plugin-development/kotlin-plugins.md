@@ -106,7 +106,7 @@ In general Groovy does not know anything about Kotlin. Avoid Kotlin-only feature
 - receivers
 - etc... 
 
-These features may be used in extra functionality for Kotlin callers but it is important that all the base functionality of your plugin does not require them.
+These features may be used in extra functionality for Kotlin callers, but it is important that all the base functionality of your plugin does not require them.
 
 ### Closures
 
@@ -144,7 +144,7 @@ If you are used to writing `build.gradle.kts` files, you may use the `kotlin-dsl
 The `kotlin-dls` plugin:
 
 * applies `"java-gradle-plugin"`.
-* applies `kotlin-embedded` to use the same Kotlin embeeded version as your Gradle distribution. 
+* applies `kotlin-embedded` to use the same Kotlin embedded version as your Gradle distribution. 
 * applies the `&#96;kotlin-dsl-precompiled-script-plugins&#96;` allowing to use `build.gradle.kts` files.
 * adds `gradleKotlinDsl()` to the `compileOnly` configuration.
 * configures the `sam-with-receiver` Kotlin compiler plugin to transform `it.` usages into `this.`.
@@ -156,6 +156,6 @@ The `kotlin-dls` plugin:
   * `-Xjvm-default=all` to add [Default methods in interfaces](https://kotlinlang.org/docs/java-to-kotlin-interop.html#default-methods-in-interfaces)
   * `-Xjsr305=strict` for [increased null safety](https://kotlinlang.org/docs/java-interop.html#compiler-configuration)
 
-This is a significant departure from the baseline Kotlin configuration so be aware of the tradeoffs when using `kotlin-dsl`. 
+This is a significant departure from the baseline Kotlin configuration so be aware of the trade-offs when using `kotlin-dsl`. 
 
 Also, `kotlin-dsl` targets the Kotlin embedded version of your current distribution. If you want to be compatible with lower versions of Gradle, using the `com.jetbrains.kotlin.jvm` plugin provides more flexibility.  
