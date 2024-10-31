@@ -84,7 +84,8 @@ If the steps above are too complicated, maybe because a required dependency uses
 
 To do this, you can use [R8](https://github.com/GradleUp/GR8). You can read more about the process [in this dedicated blog post](https://blog.mbonnin.net/use-latest-kotlin-in-your-gradle-plugins). 
 
-> [!NOTE] [Shadow](https://github.com/GradleUp/shadow/) could be an alternative, but we have found that it doesn't work reliably because [it relocates String constants as well](https://github.com/GradleUp/shadow/issues/232)
+!!! note
+    [Shadow](https://github.com/GradleUp/shadow/) could be an alternative, but we have found that it doesn't work reliably because [it relocates String constants as well](https://github.com/GradleUp/shadow/issues/232)
 
 ### Alternative #2: using separate classloaders
 
@@ -145,17 +146,17 @@ The `kotlin-dls` plugin:
 
 * applies `"java-gradle-plugin"`.
 * applies `kotlin-embedded` to use the same Kotlin embedded version as your Gradle distribution. 
-* applies the `&#96;kotlin-dsl-precompiled-script-plugins&#96;` allowing to use `build.gradle.kts` files.
+* applies the `"kotlin-dsl-precompiled-script-plugins"` allowing to use `build.gradle.kts` files.
 * adds `gradleKotlinDsl()` to the `compileOnly` configuration.
 * configures the `sam-with-receiver` Kotlin compiler plugin to transform `it.` usages into `this.`.
 * configures the `kotlin-assignment` Kotlin compiler plugin to allow setting `Property` with the `=` operator.
-* sets Kotlin `apiVersion` and `languageVersion` according to Gradle [compatibility Matrix](https://docs.gradle.org/current/userguide/compatibility.html#kotlin). 
+* sets Kotlin `apiVersion` and `languageVersion` according to Gradle [compatibility matrix](https://docs.gradle.org/current/userguide/compatibility.html#kotlin). 
 * adds the `-Xsam-conversions=class` compiler option.
 * adds others compiler options for compatibility:
-  * `-java-parameters` to support [Java 8 Parameter](https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Parameter.html) class and getting method parameters through reflection
-  * `-Xjvm-default=all` to add [Default methods in interfaces](https://kotlinlang.org/docs/java-to-kotlin-interop.html#default-methods-in-interfaces)
-  * `-Xjsr305=strict` for [increased null safety](https://kotlinlang.org/docs/java-interop.html#compiler-configuration)
+    * `-java-parameters` to support [Java 8 Parameter](https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Parameter.html) class and getting method parameters through reflection
+    * `-Xjvm-default=all` to add link: [Default methods in interfaces](https://kotlinlang.org/docs/java-to-kotlin-interop.html#default-methods-in-interfaces)
+    * `-Xjsr305=strict` for [increased null safety](https://kotlinlang.org/docs/java-interop.html#compiler-configuration)
 
 This is a significant departure from the baseline Kotlin configuration so be aware of the trade-offs when using `kotlin-dsl`. 
 
-Also, `kotlin-dsl` targets the Kotlin embedded version of your current distribution. If you want to be compatible with lower versions of Gradle, using the `com.jetbrains.kotlin.jvm` plugin provides more flexibility.  
+Also, `kotlin-dsl` targets the Kotlin embedded version of your current distribution. If you want to be compatible with lower versions of Gradle, using the `com.jetbrains.kotlin.jvm` plugin provides more flexibility.
