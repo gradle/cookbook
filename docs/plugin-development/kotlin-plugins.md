@@ -145,7 +145,7 @@ If you are used to writing `build.gradle.kts` files, you may use the `kotlin-dsl
 The `kotlin-dls` plugin:
 
 * applies `"java-gradle-plugin"`.
-* applies `kotlin-embedded` to use the same Kotlin embeeded version as your Gradle distribution. 
+* applies `kotlin-embedded` to use the same Kotlin embedded version as your Gradle distribution. 
 * applies the `"kotlin-dsl-precompiled-script-plugins"` allowing to use `build.gradle.kts` files.
 * adds `gradleKotlinDsl()` to the `compileOnly` configuration.
 * configures the `sam-with-receiver` Kotlin compiler plugin to transform `it.` usages into `this.`.
