@@ -106,7 +106,7 @@ In general Groovy does not know anything about Kotlin. Avoid Kotlin-only feature
 - receivers
 - etc... 
 
-These features may be used in extra functionality for Kotlin callers but it is important that all the base functionality of your plugin does not require them.
+These features may be used in extra functionality for Kotlin callers, but it is important that all the base functionality of your plugin does not require them.
 
 ### Closures
 
@@ -143,18 +143,18 @@ If you are used to writing `build.gradle.kts` files, you may use the `kotlin-dsl
 
 The `kotlin-dls` plugin:
 * applies `"java-gradle-plugin"`.
-* applies `kotlin-embedded` to use the same Kotlin embeeded version as your Gradle distribution. 
+* applies `kotlin-embedded` to use the same Kotlin embedded version as your Gradle distribution. 
 * applies the `&#96;kotlin-dsl-precompiled-script-plugins&#96;` allowing to use `build.gradle.kts` files.
 * adds `gradleKotlinDsl()` to the `compileOnly` configuration.
 * configures the `sam-with-receiver` Kotlin compiler plugin to transform `it.` usages into `this.`.
 * configures the `kotlin-assignment` Kotlin compiler plugin to allow setting `Property` with the `=` operator.
-* sets Kotlin `apiVersion` and `languageVersion` according to Gradle [compatibility [atrix](https://docs.gradle.org/current/userguide/compatibility.html#kotlin). 
+* sets Kotlin `apiVersion` and `languageVersion` according to Gradle [compatibility matrix](https://docs.gradle.org/current/userguide/compatibility.html#kotlin). 
 * adds the `-Xsam-conversions=class` compiler option.
 * adds others compiler options for compatibility:
   ** `-java-parameters` to support https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Parameter.html[Java 8 Parameter] class and getting method parameters through reflection
   ** `-Xjvm-default=all` to add link:https://kotlinlang.org/docs/java-to-kotlin-interop.html#default-methods-in-interfaces[Default methods in interfaces]
   ** `-Xjsr305=strict` for https://kotlinlang.org/docs/java-interop.html#compiler-configuration[increased null safety]
 
-This is a significant departure from the baseline Kotlin configuration so be aware of the tradeoffs when using `kotlin-dsl`. 
+This is a significant departure from the baseline Kotlin configuration so be aware of the trade-offs when using `kotlin-dsl`. 
 
 Also, `kotlin-dsl` targets the Kotlin embedded version of your current distribution. If you want to be compatible with lower versions of Gradle, using the `com.jetbrains.kotlin.jvm` plugin provides more flexibility.  
