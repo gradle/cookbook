@@ -1,7 +1,7 @@
 # Executing Gradle builds on GitHub Actions
 
 !!! tip
-    Top engineering teams using GitHub Actions have been able to reduce CI build time by up to 90% by using the Gradle Build Cache. [Register here](https://gradle.org/training/#build-cache-deep-dive) for our Build Cache training session to learn how your team can achieve similar results.
+    Top engineering teams using GitHub Actions have been able to reduce CI build time by up to 90% by using the Gradle Build Cache. [Register here](https://dpeuniversity.gradle.com/app/courses/ec69d0b8-9171-4969-ac3e-82dea16f87b0) for our Build Cache training session to learn how your team can achieve similar results.
 
 Building Gradle projects doesn't stop with the developer's machine. [Continuous Integration](https://en.wikipedia.org/wiki/Continuous_integration) (CI) has been a long-established practice for running a build for every single change committed to version control to tighten the feedback loop.
 
@@ -54,7 +54,7 @@ $ git push
 
 ### Test building the project
 
-The project uses the [Gradle Wrapper](gradle_wrapper.adoc#gradle_wrapper_reference) for building the project. It is a recommended practice for any Gradle project as it enables your project to be built on CI without having to install the Gradle runtime.
+The project uses the [Gradle Wrapper](https://docs.gradle.org/current/userguide/gradle_wrapper.html) for building the project. It is a recommended practice for any Gradle project as it enables your project to be built on CI without having to install the Gradle runtime.
 
 Before asking GitHub Actions to build your project, it's useful to ensure that it builds locally. Adding the "CI" environment variable will emulate running the build on GitHub Actions.
 

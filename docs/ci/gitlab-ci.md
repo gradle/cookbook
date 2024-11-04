@@ -31,9 +31,7 @@ If not, follow these steps to initialize a new Gradle project on GitLab.
 
 Create a new repository named `gitlab-ci-gradle-sample` via the GitLab user interface.
 
-<!-- TODO: replace image
-image::ci-systems/github-actions-create-repository.png[Create new GitLab repository]
--->
+![Create new GitHub repository](images/gitlab-ci-create-repository.png)
 
 ### Clone the repository locally
 

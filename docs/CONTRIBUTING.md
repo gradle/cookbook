@@ -1,6 +1,6 @@
 # Contributing to the Gradle Cookbook
 
-[![a](https://img.shields.io/badge/slack-%23docs-brightgreen?style=flat&logo=slack)](./contributing/community-slack.md)
+[![a](https://img.shields.io/badge/slack-%23docs-brightgreen?style=flat&logo=slack)](https://gradle.org/slack-invite)
 
 
 The Gradle Cookbook is under active development.
@@ -8,7 +8,7 @@ Any contributions are welcome!
 
 ## Discuss
 
-- `#docs` on the [Gradle Community Slack](../contributing/community-slack.md)
+- `#docs` on the [Gradle Community Slack](https://gradle.org/slack-invite)
 - [GitHub Issues](https://github.com/gradle/community/issues)
 
 ## Development Environment
@@ -23,7 +23,7 @@ A few tips:
 
 - All the pages on this site are written in Markdown.
 - If needed, we have various tools available, such as code templates and macros, and we can add more MkDocs plugins if necessary.
-- The Table of Contents is currently located in [mkdocs.yml](../mkdocs.yml).
+- The Table of Contents is currently located in [mkdocs.yml](https://github.com/gradle/cookbook/blob/main/mkdocs.yml).
 When adding new pages, please update the ToC to ensure they are discoverable.
 
 ### Adding New Categories
