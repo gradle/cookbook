@@ -31,6 +31,12 @@ When adding new pages, please update the ToC to ensure they are discoverable.
 At the moment, we add categories based on consensus.
 If you plan to add a new major category, it's better to discuss it in advance.
 
+## Previews
+
+For any pull equest with the approved GitHub Actions run,
+a preview site will be deployed.
+The build both will share the link in the comments to the pull request.
+
 ## References
 
 - [Main Contributor Guide](https://community.gradle.org/contributing/) - describes how to contribute to Gradle
