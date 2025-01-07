@@ -105,19 +105,9 @@
     </div>
   </section>
 {% endblock %}
+
 {% block content %}{% endblock %}
+
 {% block footer %}
-<div class="md-footer-meta md-typeset">
-    <!-- Cookie Consent -->
-    <!-- FIXME: <div id="analytics-consent-div"></div> -->
-
-    <div class="md-footer-meta__inner md-grid">
-      {% include "partials/copyright.html" %}
-
-      <!-- Social links -->
-      {% if config.extra.social %}
-        {% include "partials/social.html" %}
-      {% endif %}
-    </div>
-  </div>
+   {{ super() }}
 {% endblock %}
