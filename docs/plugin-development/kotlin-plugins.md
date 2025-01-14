@@ -142,7 +142,7 @@ If you are used to writing `build.gradle.kts` files, you may use the `kotlin-dsl
 
 `kotlin-dsl` configures the Kotlin compiler so that you can use precompiled scripts plugins and/or write similar syntax in your regular `.kt` files.
 
-The `kotlin-dls` plugin:
+The `kotlin-dsl` plugin:
 
 * applies `"java-gradle-plugin"`.
 * applies `kotlin-embedded` to use the same Kotlin embedded version as your Gradle distribution. 
