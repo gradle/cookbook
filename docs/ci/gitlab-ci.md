@@ -146,7 +146,7 @@ Any subsequent push to the repository will trigger the pipeline to run.
 
 By default, no files are persisted between CI runs, so each job must download all dependencies again. We can configure GitLab to cache some files between jobs. This is especially efficient when running your own GitLab CI runner, as the cache is stored locally on the runner.
 
-CAUTION: The publicly available shared runners store their cache in a remote location. As the cache grows, downloading the cache archive, extracting it, and uploading it again at the end of the job may take more time than not using any cache. For this reason, we recommend only caching the Gradle Wrapper. For caching everything else, see configuring a [Gradle Remote Build Cache](https://docs.gradle.org/current/userguide/build_cache.html).
+CAUTION: The publicly available shared runners store their cache in a remote location. As the cache grows, downloading the cache archive, extracting it, and uploading it again at the end of the job may take more time than not using any cache. For this reason, we recommend only caching the Gradle Wrapper. For caching of intermediate build results, see configuring a [Gradle Remote Build Cache](https://docs.gradle.org/current/userguide/build_cache.html). To cache external dependencies used in builds, it is best to set up a dedicated repository manager in your infrastructure and configure it as a proxy for those dependencies. Solutions like [Sonatype Nexus](https://hub.docker.com/r/sonatype/nexus3/) or [JFrog Artifactory](https://jfrog.com/) can be used to act as a repository manager.
 
 To reuse some files between jobs, add the following configuration to your existing jobs:
 
