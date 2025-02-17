@@ -2,14 +2,16 @@
 
 The configuration and execution phase of builds always take the longest.
 You may already know about the build cache, which saves execution time by reusing outputs from past builds. 
-The new [Configuration Cache](https://docs.gradle.org/current/userguide/configuration_cache.html) feature reuses configuration results from past builds to speed up the configuration phase.
+Gradle's [Configuration Cache](https://docs.gradle.org/current/userguide/configuration_cache.html),
+introduced in 6.6 and becoming a preferred mode of execution in Gradle 10,
+reuses configuration results from past builds to speed up the configuration phase.
 
 If you keep an eye on [Gradle public roadmap updates](https://roadmap.gradle.org),
-you've probably noticed lots of work on the configuration cache.
-This feature is almost finished incubating -- expect to see a stable release soon.
-Still, there is a lot of work to be done in the plugins,
-many Gradle tasks still need to have configuration cache compatibility.
-We track the status on [this GitHub Issue](https://github.com/gradle/gradle/issues/13490), and any contributions are more than welcome.
+you've probably noticed lots of improvements in Configuration Cache, and steady adoption in the ecosystem.
+Still, there is a lot of work to be done in the plugins.
+Many Gradle plugins still need to have configuration cache compatibility, and also updates might be needed in end user builds and convention plugins.
+For the community plugins for Gradle,
+we track the status on [this GitHub Issue](https://github.com/gradle/gradle/issues/13490), and any contributions are more than welcome!
 
 On this page, we focus on tips for plugins developers and contributors who want to fix Configuration Cache (CC) compatibility in their projects.
 
