@@ -9,6 +9,7 @@ mkdocs-macros-plugin==1.0.5
 mkdocs-material==9.5.17
 mkdocs-material[imaging]==9.5.17
 mkdocs-multirepo-plugin==0.6.3
+mkdocs-nav-weight==0.2.0
 mkdocs-redirects==1.2.1
 mkdocs-extra-sass-plugin==0.1.0
 mkdocs-render-swagger-plugin==0.1.1
