@@ -38,6 +38,7 @@ nav:
   - Plugin Development:
     - Summary: plugin-development/README.md
     - Kotlin plugin development: plugin-development/kotlin-plugins.md
+    - Ensuring Configuration Cache compatibility: plugin-development/configuration-cache/
 
 # Theme
 theme:
@@ -149,6 +150,9 @@ plugins:
   - git-committers:
       repository: gradle/cookbook
       branch: main
+  - mkdocs-nav-weight:
+      # Index/README go first in folder includes
+      index_weight: -10
 
   - with-pdf:
       enabled_if_env: BUILD_PDF
