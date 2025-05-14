@@ -37,6 +37,10 @@ For any pull equest with the approved GitHub Actions run,
 a preview site will be deployed.
 The build both will share the link in the comments to the pull request.
 
+## Building the Cookbook PDF
+
+Run `BUILD_PDF=1 mkdocs build` to generate the PDF file in [_site/pdf/cookbook.pdf](./../_site/pdf/cookbook.pdf).
+
 ## References
 
 - [Main Contributor Guide](https://community.gradle.org/contributing/) - describes how to contribute to Gradle
