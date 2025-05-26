@@ -21,13 +21,16 @@ nav:
     - preface.md
     - chapters.md
     - Contributing: CONTRIBUTING.md
-  - Gradle on CI:
-    - Summary: ci/README.md
-    - Jenkins: ci/jenkins.md
-    - TeamCity: ci/teamcity.md
-    - GitHub Actions: ci/github-actions.md
-    - GitLab CI: ci/gitlab-ci.md
-    - Travis CI: ci/travis-ci.md
+  - Integrations:
+    - Overview: integrations/README.md
+    - Maven Central Publishing: integrations/maven-central/publishing.md
+    - Gradle and CI:
+      - Summary: ci/README.md
+      - Jenkins: ci/jenkins.md
+      - TeamCity: ci/teamcity.md
+      - GitHub Actions: ci/github-actions.md
+      - GitLab CI: ci/gitlab-ci.md
+      - Travis CI: ci/travis-ci.md
   - Gradle for Kotlin: kotlin/README.md
   - Gradle for Android: android/README.md
   - Troubleshooting Gradle: troubleshooting/README.md
