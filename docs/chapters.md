@@ -8,7 +8,7 @@ More chapters will be added soon, contributions are [welcome](./CONTRIBUTING.md)
 
 ## Integrations
 
-- [Maven Central Publishing](./integrations/maven-central/README.md)
+- [Maven Central Publishing](./integrations/maven-central/publishing.md)
 - [Gradle on Continuous Integration](./ci/README.md)
 
 ## By Technology
