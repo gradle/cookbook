@@ -31,6 +31,7 @@ As [announced](https://central.sonatype.org/news/20250326_ossrh_sunset/) by Sona
 With the sunset of OSSRH, Maven Central is transitioning to a new hosting implementation, which includes a complete redesign of its APIs. As a result, builds publishing to Maven Central will need to make changes. 
 
 There are two options:
+
 1. Switch to the new [Central Portal](https://central.sonatype.org/publish/publish-portal-guide/). 
 2. Update to use an [OSSRH compatibility layer](https://central.sonatype.org/publish/publish-portal-ossrh-staging-api/). 
 
