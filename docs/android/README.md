@@ -105,7 +105,7 @@ Gradle provides various options to improve build performance, including **build 
 org.gradle.parallel=true
 ```
 
-To explore more optimization techniques and configure your builds for better performance, check out our detailed guide: [Gradle Build Optimization](../../docs/android/optimization.md). 
+To explore more optimization techniques and configure your builds for better performance, check out our detailed guide: [Gradle Build Optimization](./optimization.md). 
 
 For further information, visit the **official**  [Optimizing Builds Guide](https://developer.android.com/build/optimize-your-build).
 
@@ -142,7 +142,7 @@ configurations.all {
 ```
 For more troubleshooting tips, visit the **official**  [Troubleshooting AGP](https://developer.android.com/build/troubleshoot) page.
 
-You can also check the [Gradle Troubleshooting](../../docs/android/troubleshooting.md) page for additional help with Gradle-specific issues.
+You can also check the [Gradle Troubleshooting](./troubleshooting.md) page for additional help with Gradle-specific issues.
 
 ## References
 
