@@ -24,17 +24,19 @@ As of now, there is no officially recommended plugin for publishing to Maven Cen
 
 Note that not all listed plugins are actively maintained, and one has to choose carefully based on their use cases. See the recommendations below.
 
-## Breaking Changes in Maven Central on June 2025
+## Breaking Changes to Maven Central Publishing (June 2025)
 
-As [announced](https://central.sonatype.org/news/20250326_ossrh_sunset/) by Sonatype, the [Sonatype OSS Repository Hosting service (OSSRH)](https://central.sonatype.org/publish/publish-guide/) will reach end-of-life on June 30th, 2025\. OSSRH is an old and deprecated component of the [Maven Central Repository](https://central.sonatype.com/) service. 
+As [announced](https://central.sonatype.org/news/20250326_ossrh_sunset/) by Sonatype, the [Sonatype OSS Repository Hosting service (OSSRH)](https://central.sonatype.org/publish/publish-guide/) will reach end-of-life on June 30th, 2025\. OSSRH is an old and deprecated component of the [Maven Central Repository](https://central.sonatype.com/) service used to publish artifacts to Maven Central. 
 
-With the sunset of OSSRH, Maven Central is transitioning to a new hosting implementation, which includes a complete redesign of its APIs. As a result, Maven Central publishing plugins must be updated to remain compatible once the OSSRH compatibility layer is removed in June 2025\.
+With the sunset of OSSRH, Maven Central is transitioning to a new hosting implementation, which includes a complete redesign of its APIs. As a result, builds publishing to Maven Central will need to make changes. 
 
-We invite the plugin maintainers to update their plugins and add support for the new APIs. 
+There are two options:
+1. Switch to the new [Central Portal](https://central.sonatype.org/publish/publish-portal-guide/). 
+2. Update to use an [OSSRH compatibility layer](https://central.sonatype.org/publish/publish-portal-ossrh-staging-api/). 
 
 ### Compatible Plugins
 
-Several plugins already report compatibility with the new APIs, and new plugins have been developed specifically for the updated implementation. Among the plugins listed above, the following are known to be mostly compatible based on their changelogs:
+Several plugins already report compatibility with the Central Portal API, and new plugins have been developed specifically for the updated implementation. Among the plugins listed above, the following are known to be mostly compatible based on their changelogs:
 
 * [vanniktech/gradle-maven-publish-plugin](https://github.com/vanniktech/gradle-maven-publish-plugin) (common and base versions)  
 * [JReleaser](https://jreleaser.org/)   
