@@ -1,0 +1,349 @@
+#  Unlocking Configuration Cache
+## Reflections from a GSoC Contributor
+
+---
+
+>  A hands-on journey into Gradle’s Configuration Cache , lessons learned, obstacles tackled, and contributions made during Google Summer of Code.
+
+---
+
+##  Overview
+
+Welcome! This document details my journey improving Configuration Cache compatibility in Gradle plugins as a Google Summer of Code contributor. My goal is to offer a practical reference for plugin developers, Gradle users, and future GSoC applicants.
+
+***To demonstrate how to add this compatibility, we'll use my work on the gradle-lint-plugin as a real-world example of refactoring a plugin that relies heavily on the Project object.***
+
+# LintGradleTask
+
+The Problem: Accessing project at Execution Time
+This is violate the Configuration Cache rules in a few key places:
+
+1. Direct project access in the task action: The line ```new LintService().lint(project, ...) ```inside the @TaskAction directly used the project object.
+
+2. Passing project to services: The GradleLintPatchAction and GradleLintInfoBrokerAction were created in the constructor with a direct reference to the project object, which they held onto until the task executed.
+
+```
+@TaskAction
+    void lint() {
+        //TODO: address Invocation of Task.project at execution time has been deprecated.
+        DeprecationLogger.whileDisabled {
+            def violations = new LintService().lint(project, onlyCriticalRules.get()).violations
+                    .unique { v1, v2 -> v1.is(v2) ? 0 : 1 }
+
+            (getListeners() + new GradleLintPatchAction(project) + new GradleLintInfoBrokerAction(project) + consoleOutputAction).each {
+                it.lintFinished(violations)
+            }
+        }
+    }
+```
+
+
+# Solution:
+
+The Configuration Cache works by recording the state of all tasks after the configuration phase and saving it. When you run the build again, Gradle can restore this saved state instead of re-configuring the entire project, leading to significant performance gains. This process fails if a task holds a direct reference to the live Project model, which is not serializable.
+
+We solved this by creating simple, serializable data containers `ProjectInfo and ProjectTree` that act as a "projection" of the data we need from the Project object.
+
+Here’s a breakdown of the key changes and the "why" behind them:
+
+1) Create Serializable Data Containers (ProjectInfo & ProjectTree) 
+The first step was to define classes that could hold the project data we needed, but in a simple, serializable way.
+
+`ProjectInfo`: It stores primitive data like name, path, File objects, and serializable collections like Map. It safely carry information from the configuration phase to the execution phase.
+
+`ProjectTree`: This class holds a list of ProjectInfo objects, representing the entire project structure needed for the linting process. It is also serializable.
+
+**Learning**: If you need data from the Project object during execution, create a dedicated, Serializable class to hold that data.
+
+
+
+```
+/**
+ * A CC-compatible projection of project data.
+ */
+class ProjectInfo implements Serializable{
+    String name
+    String path
+    File rootDir
+    File buildFile
+    File projectDir
+    File buildDirectory
+    GradleLintExtension extension
+    Map<String, Object> properties
+    Supplier<Project> projectSupplier
+
+    static ProjectInfo from(Task task, Project subproject) {
+        String subprojectPath = subproject.path
+        return build(subproject, { task.project.project(subprojectPath) })
+    }
+
+    static ProjectInfo from(Task task) {
+        return build(task.project, task::getProject)
+    }
+
+    @VisibleForTesting
+    private static ProjectInfo build(Project project, Supplier<Project> projectSupplier) {
+        GradleLintExtension extension =
+                project.extensions.findByType(GradleLintExtension) ?:
+                project.rootProject.extensions.findByType(GradleLintExtension)
+        Map<String, Object> properties = [:]
+        if (project.hasProperty('gradleLint.rules')) {
+            properties['gradleLint.rules'] = project.property('gradleLint.rules')
+        }
+        if (project.hasProperty('gradleLint.excludedRules')) {
+            properties['gradleLint.excludedRules'] = project.property('gradleLint.excludedRules')
+        }
+
+        return new ProjectInfo(
+                name:project.name,
+                path:project.path,
+                rootDir:project.rootDir,
+                buildFile: project.buildFile,
+                projectDir:project.projectDir,
+                extension: extension,
+                properties: properties,
+                projectSupplier: projectSupplier,
+                buildDirectory : project.buildDir
+        )
+
+    }
+}
+
+class ProjectTree{
+    List<ProjectInfo> allProjects
+
+    ProjectTree(List<ProjectInfo> allProjects){
+        this.allProjects = allProjects
+    }
+
+    /**
+     * Returns the base project this tree was built from.
+     */
+    ProjectInfo getBaseProject() {
+        return allProjects.head()
+    }
+
+    /**
+     * Build a project tree based on the given task's project.
+     *
+     * @return a project tree reflecting information and the structure of the given task's project
+     */
+    static from(Task task) {
+        def baseProject = task.project
+        List<ProjectInfo> projectInfos = [ProjectInfo.from(task)] + baseProject.subprojects.collect { Project p -> ProjectInfo.from(task, p) }
+        return new ProjectTree(projectInfos)
+    }
+}
+```
+2. Capture Project Data During the Configuration Phase
+The task constructor is part of the configuration phase, so it's the perfect place to safely access the project object and extract our data. We use Gradle's Provider API to do this lazily.
+
+```
+LintGradleTask() {
+        failOnWarning.convention(false)
+        onlyCriticalRules.convention(false)
+        projectTree.set(project.provider {ProjectTree.from(this) })
+        projectInfo.convention(projectTree.map(ProjectTree::getBaseProject))
+        projectRootDir.set(project.rootDir)
+        infoBrokerAction = new GradleLintInfoBrokerAction(this)
+        patchAction = new GradleLintPatchAction(getProjectInfo().get())
+        group = 'lint'
+    }
+```
+
+``` project.provider { ... }```: This creates a Provider. The code inside the closure is executed by Gradle during the configuration phase. It accesses the project and creates our serializable ProjectTree.
+
+```.set(...)```: We set this Provider as the value for our projectTree property.
+
+```.map(...)```: We then create a derived provider for the projectInfo by transforming the result of the projectTree provider.
+
+**Learning**: Use the Provider API ```(provider { ... }, map)``` inside your task's constructor to capture and transform project data without breaking task-configuration avoidance.
+
+# LintService
+We transform LintService from a class deeply integrated with Gradle's live project model into a stateless service. The new design makes it compatible with the Configuration Cache by ensuring it operates exclusively on simple, serializable data during the task's execution phase.
+
+## The Problem: A service that is associated with the Project instance
+The [original LintService](https://github.com/Nouran-11/gradle-lint-plugin/blob/main/src/main/groovy/com/netflix/nebula/lint/plugin/LintService.groovy) was not compatible with the Configuration Cache because its methods required a live Project object as a parameter.
+
+Methods like ``` lint(Project project, ...)``` and ``` ruleSetForProject(Project p, ...) ``` directly manipulated Project objects.
+
+It would read configuration dynamically by calling ``` p.extensions.getByType(...) ``` and  ``` p.property(...)```.
+
+This design meant the service could only function when connected to the live Gradle build model, making it impossible for Gradle to serialize the task that uses it.
+
+## The Solution: A stateless service using pre-existing configuration data from the Project object 
+[Updated LintService Full Code](https://github.com/Nouran-11/gradle-lint-plugin/blob/fixing-cc-nebula/src/main/groovy/com/netflix/nebula/lint/plugin/LintService.groovy)
+
+The refactored LintService is now completely decoupled from the Project object at execution time. It operates like a pure function: it receives all the data it needs as input (ProjectTree and ProjectInfo) and produces a result.
+
+1. Accepting Data Projections Instead of Project Objects
+The most significant change is in the method signatures.
+
+Before:``` lint(Project project, ...)```
+
+After:``` lint(ProjectTree projectTree, ...)```
+
+The service no longer receives the Project object. Instead, it gets the ProjectTree ,our serializable snapshot of the entire project structure. All subsequent operations, like iterating over subprojects, are done using this simple data object ```(projectTree.allProjects.each { ... })```.
+
+2. Reading Configuration from Snapshots
+The service now gets all its configuration from the ProjectInfo data transfer object.
+
+Before: It actively queried the project for properties and extensions: ```p.hasProperty(...)``` or ```p.extensions.getByType(...)```.
+
+After: It passively reads pre-extracted data from the input: ```projectInfo.properties[...]``` and ```projectInfo.extension```.
+
+This ensures the service doesn't need to communicate with the live build model. All the decisions were already made during the configuration phase, and the results were stored in ProjectInfo.
+
+3. Isolating Operations That Require the Live Model
+The new code cleverly handles rules that must access the live project model **ModelAwareGradleLintRule**.
+
+It first checks if any such rule is present ```(if (containsModelAwareRule))```.
+
+Only if it's true does it use the ```supplier (Project project = p.projectSupplier.get())``` to re-acquire the Project object **when it really needed**.
+
+**This is an advanced pattern that minimizes the impact on caching. The non-cache-friendly code path is isolated and only executed when absolutely necessary.**
+
+**Learning**: Services called by a cacheable task must also be cache-friendly. They should be designed to be stateless, receiving all necessary information through their method arguments and avoiding any direct interaction with the Project object during the execution phase.
+
+# LintRuleRegistry
+## The Problem: Directly Injecting the Project Object
+
+
+The [original LintRuleRegistery  ](https://github.com/Nouran-11/gradle-lint-plugin/blob/main/src/main/groovy/com/netflix/nebula/lint/plugin/LintRuleRegistry.groovy) created a direct and hard dependency on the Project object, which is a blocker for the Configuration Cache.
+
+The buildRules method took a Project as a parameter and, for certain rules, assigned it directly to a field:
+
+```(r as ModelAwareGradleLintRule).project = project```
+
+This meant that any ModelAwareGradleLintRule instance created by the registry held a reference to the non-serializable Project object, making it impossible for Gradle to cache any task that used this registry.
+
+## The Solution: Lazily Access Project with a Supplier when it needed 
+[Updated LintRuleRegistery ](https://github.com/Nouran-11/gradle-lint-plugin/blob/fixing-cc-nebula/src/main/groovy/com/netflix/nebula/lint/plugin/LintRuleRegistry.groovy)
+The solution was to stop passing the Project object itself and instead pass a ```Supplier<Project>```a lightweight, serializable object that knows how to get the Project object later.
+
+***Injecting the Supplier, Not the Project***
+A new, primary buildRules method was introduced with a new signature.
+
+Before: ```buildRules(String ruleId, Project project, ...)```
+
+After:``` buildRules(String ruleId, Supplier<Project> projectSupplier, ...)```
+
+The critical line inside was changed to inject this new supplier:
+
+```(r as ModelAwareGradleLintRule).projectSupplier = projectSupplier```
+
+***This is the core of the fix. Instead of giving the rule the Project object directly, we are now giving it a "recipe" to get the project if and when it actually needs it. The Supplier is serializable, so the entire process becomes cache-friendly.***
+
+***Learning :*** Object creation logic is a common source of Configuration Cache issues. When an object you are creating needs access to the Project model, inject a Supplier<Project> instead of the Project object itself. This defers the access and allows the object and its creation process to be serializable.
+
+## Guiding Principle for the Remaining Classes
+The rest of the refactoring follows a single, consistent rule: Any class used during the task's execution phase must be decoupled from the Project object.
+
+This is achieved by applying one of two patterns:
+
+* Operating on Data (ProjectInfo): If a class needs to read data from the project, its methods are changed to accept a ProjectInfo or ProjectTree object as a parameter. All internal logic is then updated to read from this serializable data instead of the live Project object.
+
+* Deferring Access (Supplier<Project>): If a class absolutely must interact with the live project model (the "escape hatch" scenario), it's given a Supplier<Project>. This allows it to re-acquire the Project object on-demand, a process that is compatible with the Configuration Cache.
+
+ 
+* [ Original Source Code (Before Changes): ](https://github.com/Nouran-11/gradle-lint-plugin)
+
+* [Updated Source Code (After CC Compatibility Changes): ](https://github.com/Nouran-11/gradle-lint-plugin)
+
+# Technical Notes
+## findByType() vs. getByType()
+When working with Gradle extensions, there are two common methods to retrieve an extension by its class: ```findByType()``` and ```getByType()```. The key difference lies in how they behave when an extension is not found.
+
+```getByType(Class<T> type)```
+
+***Returns***: The extension instance if it exists.
+
+***Throws***: An UnknownDomainObjectException if the extension does not exist.
+
+***Use this when you consider the extension's presence mandatory for your plugin's logic to proceed.***
+
+```findByType(Class<T> type)```
+
+***Returns :*** The extension instance if it exists.
+
+***Returns :*** null if the extension does not exist.
+
+***Use this when the extension is optional, and your code needs to safely handle cases where it might be missing.***
+
+## Notes on Gradle TestKit
+For those new to testing Gradle plugins, the Gradle TestKit is an essential tool. It allows you to run real builds as part of your tests, giving you confidence that your plugin behaves correctly for end-users.
+
+I started by learning from the  [official TestKit documentation ](https://docs.gradle.org/current/userguide/test_kit.html) and by studying the extensive examples in the nebula-lint-plugin's existing test suite. I also found the talk ["Testing the Build with Testkit"](https://www.youtube.com/watch?v=P7SvwkRXjSU) to be very helpful for understanding the different types of tests.
+
+Here are some key takeaways:
+
+Types of Tests:
+
+***Unit Tests:***
+
+* Focus on a single class in isolation.
+
+* The class under test does not use the Gradle API.
+
+***Integration Tests:***
+
+* The class(es) under test use Gradle APIs, often interacting with a Project instance.
+
+* These do not execute a full build but test the integration with Gradle's model.
+
+***Functional Tests (The focus of TestKit):***
+
+* Executes a build script from an end-user's perspective.
+
+* Examines the build outcome, output, and any created files.
+
+* Runs in a fully isolated test environment.
+
+The Structure of a TestKit Test
+Most functional tests follow a clear "Given-When-Then" structure, which makes them easy to read and understand:
+
+***given block:*** Sets up the test environment. This is where you create a temporary project directory and write the build.gradle or other files needed for the test.
+
+***when block:*** Executes a Gradle task using the GradleRunner. This is where you run the build (e.g., ./gradlew lintGradle).
+
+***then block:*** Verifies the outcome. Here, you use assertions to check if the build succeeded or failed, inspect the build output, or verify that files were created or modified as expected.
+
+---
+
+***The following notes serve as a technical blueprint for completing the Configuration Cache compatibility work in the Nebula Lint plugin or for tackling similar challenges in other Gradle plugins. This strategic plan breaks down the complex problem into manageable steps.***
+
+***1. Understanding the Challenge***
+What the Plugin Does: The plugin works by building an Abstract Syntax Tree (AST) of a build script and then traversing it with a set of rules.
+
+***The Core Issue:*** Many of these rules rely on querying Project.configurations at runtime to analyze dependency setups. This dynamic querying is precisely what breaks the Gradle Configuration Cache, which forbids accessing the live Project model during the execution phase.
+
+***2. Defining the Goal***
+The objective is to refactor the plugin so that rules operate on pre-computed, serializable data instead of the live Project object.
+
+* Separate Configuration Queries: Decouple rules from Project.configurations by having them work with a "data projection"—a snapshot of the configuration data taken at the right time.
+
+* Enable Configuration-Time Setup: Move all data gathering to Gradle's configuration phase, avoiding runtime queries entirely.
+
+* Refactor Incrementally: Start with simpler, purely syntactical rules (like SpaceAssignmentRule and DependencyParenthesesRule) to build momentum and prove the approach.
+
+***3. The Step-by-Step Plan***
+
+* Identify Configuration Usage: First, examine each rule to understand how it interacts with Project.configurations. Does it read dependencies? Resolve configurations? Check attributes?
+
+* Extract Configuration Data: Create a simple data object (e.g., ConfigurationInfo) to hold only the necessary information. This data should be computed once during the configuration phase using Gradle's Provider API.
+
+* Simplify Rule Dependencies: Refactor the rules to depend on the new ConfigurationInfo data object instead of accessing Project.configurations directly.
+
+* Modify the Data Flow: Enhance the main ProjectInfo data object to include this new ConfigurationInfo structure, making it available to all rules that need it.
+
+* Test Incrementally: After refactoring each rule, test it thoroughly with various build scripts to ensure its original functionality remains intact and that it no longer violates Configuration Cache rules.
+
+By following this iterative plan, anyone can progressively improve a plugin’s compatibility with the Gradle Configuration Cache while ensuring it remains stable and functional.
+
+
+## A Heartfelt Thank You 
+A sincere thank you to the Google Summer of Code program for this experience. I am especially grateful to my mentors for their exceptional support and guidance throughout the project. 
+
+<p style="text-align: center;">
+  <strong><em>Written by Nouran Atef, GSoC 2025 Contributor @Gradle</em></strong>
+</p>
