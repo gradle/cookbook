@@ -83,4 +83,4 @@ Choosing the right plugin might be non-trivial, as they have different feature s
 
 ## Discuss
 
-To support this effort, we have created a new **\#maven-central-publishing** channel on the [Gradle Community Slack](https://slack.gradle.org/).
+To support this effort, we have created a new **\#maven-central** channel on the [Gradle Community Slack](https://slack.gradle.org/).
