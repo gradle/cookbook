@@ -26,12 +26,13 @@ plugins {
   id("java-gradle-plugin")
 }
 
-tasks.withType<KotlinCompile>().configureEach {
-  // But make sure your plugin code only uses 1.9 APIs
-  compilerOptions.apiVersion.set(KotlinVersion.KOTLIN_1_9)
-}
-
 kotlin {
+  compilerOption {
+    // Make sure your plugin code only uses 1.9 APIs
+    apiVersion.set(KotlinVersion.KOTLIN_1_9)
+    // Make sure your older Gradle versions can compile build.gradle.kts scripts against your plugin.
+    languageVersion.set(KotlinVersion.KOTLIN_1_9)
+  }
   // Also make sure to depend on 1.9 kotlin-stdlib
   // See also https://youtrack.jetbrains.com/issue/KT-53462
   coreLibrariesVersion = "1.9.24"
