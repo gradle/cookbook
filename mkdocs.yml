@@ -38,6 +38,7 @@ nav:
     - Summary: plugin-development/README.md
     - Kotlin plugin development: plugin-development/kotlin-plugins.md
     - Ensuring Configuration Cache compatibility: plugin-development/configuration-cache/
+    - Gradle Reporting API: plugin-development/reporting-api/
 
 # Theme
 theme:
