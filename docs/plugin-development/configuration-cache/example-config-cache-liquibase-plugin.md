@@ -1,4 +1,4 @@
-# Enabling Gradle Configuration Cache Support
+# Example - Enabling Gradle Configuration Cache Support in the Liquibase Plguin
 
 ## 1. Summary
 
