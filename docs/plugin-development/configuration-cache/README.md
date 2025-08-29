@@ -25,6 +25,10 @@ in the main documentation:
 - [Auto-testing configuration Cache compatibility](https://docs.gradle.org/current/userguide/configuration_cache.html#config_cache:testing)
 
 
+## Examples and Case Studies
+
+- [Enabling Gradle Configuration Cache Support in the Liquibase Plugin](./example-config-cache-liquibase-plugin.md)
+
 ## FAQ
 
 ### How to fix "invocation of 'Task.project' at execution time is unsupported"?

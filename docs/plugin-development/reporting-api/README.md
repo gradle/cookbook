@@ -1,4 +1,9 @@
-# Gradle Reporting API
+---
+title: Gradle Reporting API
+description: >
+    Gradle has a reporting system that tasks creating reports can expose,
+    letting users configure formats and output locations. 
+---
 
 Gradle has a reporting system that tasks creating reports can expose, letting users configure formats and output locations. 
 For plugin developers that would like closer integration with Gradle systems, to integrate the [Reporting API](https://docs.gradle.org/current/javadoc/org/gradle/api/reporting/Reporting.html) 
