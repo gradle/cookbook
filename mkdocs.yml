@@ -37,8 +37,10 @@ nav:
   - Plugin Development:
     - Summary: plugin-development/README.md
     - Kotlin plugin development: plugin-development/kotlin-plugins.md
-    - Ensuring Configuration Cache compatibility: plugin-development/configuration-cache/
-    - Gradle Reporting API: plugin-development/reporting-api/
+    - Ensuring Configuration Cache compatibility:
+      - Overview: plugin-development/configuration-cache/
+      - Case study - Liquibase Plugin: plugin-development/configuration-cache/example-config-cache-liquibase-plugin.md
+    - Gradle Reporting API: plugin-development/reporting-api/README.md
 
 # Theme
 theme:
