@@ -15,6 +15,8 @@ object.
 We’ll be working with the [VerifyPluginProjectConfigurationTask](https://github.com/JetBrains/intellij-platform-gradle-plugin/blob/476130fa41347ef4e5480fb44b9d454e51aa7a18/src/main/kotlin/org/jetbrains/intellij/platform/gradle/tasks/VerifyPluginProjectConfigurationTask.kt#L44), a task from the [IntelliJ Platform Gradle Plugin](https://github.com/JetBrains/intellij-platform-gradle-plugin/tree/476130fa41347ef4e5480fb44b9d454e51aa7a18) 
 that does the simple job of validating a plugin project’s configuration.
 
+## Declaring Reporting Support in a Task
+
 Tasks that produce reports must implement the `Reporting` interface with a type argument that extends `ReportContainer`:
 
 ```kotlin
@@ -22,6 +24,8 @@ abstract class VerifyPluginProjectConfigurationTask : DefaultTask(), Reporting<V
     // skipped lines
 }
 ```
+
+## Defining the `ReportContainer` Contract
 
 `VerifyPluginConfigurationReports` is an interface that extends `ReportContainer<SingleFileReport>`. `SingleFileReport` 
 is a useful wrapper around `Report` that represents that our output will be a single file. If your report was a group of files 
@@ -60,6 +64,8 @@ class VerifyPluginConfigurationReportsImpl : VerifyPluginConfigurationReports {
 
 }
 ```
+
+## Implementing the `ReportContainer`
 
 Providing an implementation of our report container requires that we override over 40 different methods. 
 To avoid doing this, we can delegate access to these methods to another `ReportContainer` class with the help of `DelegatingReportContainer`. 
@@ -112,6 +118,8 @@ class VerifyPluginConfigurationReportsImpl @Inject constructor(
 }
 ```
 
+## Wiring the `ReportContainer` into the Task
+
 After defining our report container and report objects, back to our task to start working with them:
 
 ```kotlin
@@ -163,6 +171,8 @@ abstract class VerifyPluginProjectConfigurationTask : DefaultTask(), Reporting<V
 
 We annotate `getReports()` with `@Nested` so Gradle inspects the returned report container’s properties (like `txt`, `html`, `markdown`) and their annotations.
 
+## Setting up Report Outputs
+
 When configuring our task, we can go ahead to use our function to set up our reports:
 
 ```kotlin
@@ -171,6 +181,8 @@ reports {
     txt.outputLocation.convention(project.layout.buildDirectory.file("reports/verifyPluginConfiguration/report.txt"))
 }
 ```
+
+## Writing Data to Reports
 
 Finally, writing to our reports can be done in this fashion:
 
