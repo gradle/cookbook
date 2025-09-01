@@ -15,6 +15,9 @@ object.
 We’ll be working with the [VerifyPluginProjectConfigurationTask](https://github.com/JetBrains/intellij-platform-gradle-plugin/blob/476130fa41347ef4e5480fb44b9d454e51aa7a18/src/main/kotlin/org/jetbrains/intellij/platform/gradle/tasks/VerifyPluginProjectConfigurationTask.kt#L44), a task from the [IntelliJ Platform Gradle Plugin](https://github.com/JetBrains/intellij-platform-gradle-plugin/tree/476130fa41347ef4e5480fb44b9d454e51aa7a18) 
 that does the simple job of validating a plugin project’s configuration.
 
+!!! note
+    Tested with Gradle 9.0.0
+
 ## Declaring Reporting Support in a Task
 
 Tasks that produce reports must implement the `Reporting` interface with a type argument that extends `ReportContainer`:
@@ -194,11 +197,10 @@ if (verifyPluginProjectReports.txt.required.get()) {
 
 ## References
 
-- https://docs.gradle.org/current/dsl/org.gradle.api.reporting.ReportContainer.html
-- https://docs.gradle.org/current/dsl/org.gradle.api.reporting.Reporting.html
-- https://docs.gradle.org/current/dsl/org.gradle.api.reporting.Report.html
-- https://docs.gradle.org/current/dsl/org.gradle.api.reporting.SingleFileReport.html
-- https://docs.gradle.org/current/dsl/org.gradle.api.reporting.DirectoryReport.html
-- https://github.com/gradle/gradle/issues/7063
-
-Tested with: Gradle 9.0.0
+- [PR for VerifyPluginProjectConfigurationTask, GSoC 2025](https://github.com/JetBrains/intellij-platform-gradle-plugin/pull/2016)
+- [ReportContainer DSL](https://docs.gradle.org/current/dsl/org.gradle.api.reporting.ReportContainer.html)
+- [Reporting DSL](https://docs.gradle.org/current/dsl/org.gradle.api.reporting.Reporting.html)
+- [Report DSL](https://docs.gradle.org/current/dsl/org.gradle.api.reporting.Report.html)
+- [SingleFileReport DSL](https://docs.gradle.org/current/dsl/org.gradle.api.reporting.SingleFileReport.html)
+- [DirectoryReport DSL](https://docs.gradle.org/current/dsl/org.gradle.api.reporting.DirectoryReport.html)
+- [https://github.com/gradle/gradle/issues/7063](https://github.com/gradle/gradle/issues/7063)
