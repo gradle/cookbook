@@ -22,21 +22,21 @@ jobs:
       PR_PATH: pull/${{github.event.number}}
       DOMAIN: gradle.github.io
       PREVIEW_REPO: community-site-preview
-    
+
     steps:
       - name: Checkout
         uses: actions/checkout@v5
         with:
           submodules: "true"
-      
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.10"
-     
+
       - name: Install dependencies
         run: pip install -r .devcontainer/requirements.txt
-    
+
       - name: Build the docs
         run: mkdocs build
 
@@ -57,9 +57,9 @@ jobs:
           repository: ${{ github.repository }}
           number: ${{ github.event.number }}
           id: deploy-preview
-          message: > 
+          message: >
             A preview of ${{ github.event.after }} is uploaded and can be seen here:
-            
+
             ✨ https://${{ env.DOMAIN }}/${{ env.PREVIEW_REPO }}/${{ env.PR_PATH}}/ ✨
-            
-            Changes may take a few minutes to propagate. 
+
+            Changes may take a few minutes to propagate.
