@@ -1,6 +1,12 @@
-site_name: Site Shutdown
-site_description: This site has been shut down.
+site_name: Gradle Cookbook
+site_author: Gradle Contributors
+site_description: This site has been shut down. Please refer to https://community.gradle.org.
 site_url: https://cookbook.gradle.org
+copyright: Copyright &copy; 2025 - Gradle®
+
+repo_url: https://github.com/gradle/cookbook
+repo_name: Gradle Cookbook
+edit_uri: edit/main/docs/
 
 theme:
   name: material

@@ -1,6 +1,6 @@
 # Cookbook Site - Shutdown Notice
 
-This repository previously contained documentation and examples. The site has been shut down and now redirects to the Community Site.
+This repository previously contained documentation and examples. The site has been shut down and now redirects to the [Community Site](https://community.gradle.org).
 
 ## What happened?
 
