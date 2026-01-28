@@ -1,18 +1,11 @@
-# Gradle Cookbook
+# Cookbook Site - Shutdown Notice
 
-Gradle Cookbook is an open-source collection of recipes, guides and examples for the Gradle Build Tool.
-This is a complementary resource to the official Gradle User Manual, which covers core capabilities maintained by the Gradle team.
+This repository previously contained documentation and examples. The site has been shut down and now redirects to the [Community Site](https://community.gradle.org).
 
-The goal of this portal is to offer solution-based documentation for end users about external integrations,
-including but not limited to CI/CD tools, IDEs, support for languages and frameworks, and various peripheral tools.
+## What happened?
 
-## Status
+The cookbook site is no longer active. All documentation, examples, guides, and integrations have been moved or removed.
 
-> **WARNING:** Gradle Cookbook is an incubating project that is yet to reach the critical mass of content.
-> Any contributions will be appreciated!
+## Repository status
 
-## Contributing
-
-To contribute to this community repo, see [CONTRIBUTING.md](./docs/CONTRIBUTING.md).
-To contribute to the Gradle community as whole, we have the contributor guide [here](https://community.gradle.org/contributing/).
-All contributions are welcome!
+This repository is maintained for archival purposes only. No further updates will be made to the content.

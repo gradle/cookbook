@@ -1,6 +1,9 @@
 ---
-title: Gradle Cookbook
-template: home.html
+title: Site Shutdown
 ---
 
-Hello, world!
+<meta http-equiv="refresh" content="0; url=https://community.gradle.org" />
+
+# This Site Has Been Shut Down
+
+If you are not redirected automatically, please visit [https://community.gradle.org](https://community.gradle.org)
